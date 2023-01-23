@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class BirdMove : MonoBehaviour
 {
-    public float force = 2f;
+    public float force = 4f;
     Rigidbody2D rb;
+    public AudioSource MusicSource;
+    [SerializeField]
+    private AudioClip[] audioClips;
 
     public ParticleSystem particles;
 
@@ -22,6 +25,7 @@ public class BirdMove : MonoBehaviour
         {
             particles.Play();
             rb.AddForce(Vector3.up * force, ForceMode2D.Impulse);
+            MusicSource.Play();
         }
 
         if (rb.velocity.y <= 0) 
