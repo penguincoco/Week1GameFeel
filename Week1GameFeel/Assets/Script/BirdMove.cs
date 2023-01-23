@@ -12,6 +12,11 @@ public class BirdMove : MonoBehaviour
 
     public ParticleSystem particles;
 
+    public BirdWing birdWing;
+
+    private float bufferTimer = 0.2f;
+    [SerializeField]private float timeElapsed = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,14 +28,40 @@ public class BirdMove : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            particles.Play();
+            if (particles != null)
+                particles.Play();
+
+            if (birdWing != null)
+            {
+                birdWing.isFlapping = true;
+            }
+
             rb.AddForce(Vector3.up * force, ForceMode2D.Impulse);
-            MusicSource.Play();
+            
+            if (MusicSource != null)
+                MusicSource.Play();
+
+            //timeElapsed += Time.deltaTime;
         }
 
-        if (rb.velocity.y <= 0) 
+        if (rb.velocity.y <= 0)
         {
-            particles.Stop();
+            if (particles != null)
+                particles.Stop();
+
+            if (birdWing != null)
+                birdWing.isFlapping = false;
         }
+
+        //if (timeElapsed >= bufferTimer)
+        //{
+        //    if (particles != null)
+        //        particles.Stop();
+
+        //    if (birdWing != null)
+        //        birdWing.isFlapping = false;
+
+        //    timeElapsed = 0f;
+        //}
     }
 }
