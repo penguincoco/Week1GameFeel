@@ -36,15 +36,15 @@ public class GameManager : MonoBehaviour
         {
             if (isMovingUp)
             {
-                isMovingUp = false;
                 StopAllCoroutines();
-                StartCoroutine(spawner.SpawnClouds(cloud));
+                isMovingUp = false;
+                StartCoroutine(spawner.SpawnClouds(bubbles, isMovingUp));
             }
             else
             {
-                isMovingUp = true;
                 StopAllCoroutines();
-                StartCoroutine(spawner.SpawnClouds(bubbles));
+                isMovingUp = true;
+                StartCoroutine(spawner.SpawnClouds(cloud, isMovingUp));
             }
         }
     }
