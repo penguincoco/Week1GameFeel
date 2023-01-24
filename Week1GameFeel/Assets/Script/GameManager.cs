@@ -5,6 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
+    private CloudSpawner spawner;
+    public GameObject cloud;
+    public GameObject bubbles;
     public static GameManager Instance { get { return _instance; } }  
 
     public bool isMovingUp = true;   
@@ -22,14 +25,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        spawner = this.gameObject.GetComponent<CloudSpawner>();
+    }
+
     public void Update() 
     {
         if (Input.GetKeyDown(KeyCode.Return)) 
         {
             if (isMovingUp)
+            {
                 isMovingUp = false;
-            else 
+                StopAllCoroutines();
+                StartCoroutine(spawner.SpawnClouds(cloud));
+            }
+            else
+            {
                 isMovingUp = true;
+                StopAllCoroutines();
+                StartCoroutine(spawner.SpawnClouds(bubbles));
+            }
         }
     }
 

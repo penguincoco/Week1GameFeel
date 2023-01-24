@@ -12,10 +12,10 @@ public class CloudSpawner : MonoBehaviour
 
     void Start() 
     {
-        StartCoroutine(SpawnClouds());
+        StartCoroutine(SpawnClouds(cloudPrefab));
     }
 
-    private IEnumerator SpawnClouds() 
+    public IEnumerator SpawnClouds(GameObject objectToSpawn) 
     {
         for (int i = 0; i < 12; i++) 
         {
@@ -24,9 +24,10 @@ public class CloudSpawner : MonoBehaviour
 
             Vector2 cloudPos = new Vector2(spawnX, spawnY);
             
-            GameObject newCloud = Instantiate(cloudPrefab, cloudPos, Quaternion.identity);
+            GameObject newCloud = Instantiate(objectToSpawn, cloudPos, Quaternion.identity);
             newCloud.transform.parent = currCloudParent.transform;
         }
+
         yield return new WaitForSeconds(10f);
 
         prevCloudParent = currCloudParent;
@@ -34,6 +35,6 @@ public class CloudSpawner : MonoBehaviour
 
         Destroy(prevCloudParent);
 
-        StartCoroutine(SpawnClouds());
+        StartCoroutine(SpawnClouds(objectToSpawn));
     }
 }
