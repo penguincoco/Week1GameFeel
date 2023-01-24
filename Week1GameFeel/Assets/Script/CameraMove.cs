@@ -9,8 +9,10 @@ public class CameraMove : MonoBehaviour
 
     void Update() 
     {
-        if (isMoving) 
+        if (isMoving && GameManager.Instance.GetGameState()) 
             this.transform.position += Vector3.up/100f;
+        else if (isMoving && GameManager.Instance.GetGameState() == false)
+            this.transform.position += Vector3.down/100f;
     }
 
     public void Stop() 

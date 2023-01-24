@@ -19,10 +19,13 @@ public class BirdMove : MonoBehaviour
 
     public GameObject[] wings;
 
+    public float normalGravity;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = this.gameObject.GetComponent<Rigidbody2D>();
+        normalGravity = rb.gravityScale;
     }
 
     // Update is called once per frame
@@ -43,7 +46,17 @@ public class BirdMove : MonoBehaviour
                     wing.GetComponent<Animator>().enabled = true;
             }
 
-            rb.AddForce(Vector3.up * force, ForceMode2D.Impulse);
+            //if isMovingUp is true
+            if (GameManager.Instance.GetGameState()) 
+            {
+                rb.AddForce(Vector3.up * force, ForceMode2D.Impulse);
+                rb.gravityScale = normalGravity;
+            }
+            else 
+            {
+                rb.AddForce(Vector3.down * force, ForceMode2D.Impulse);
+                rb.gravityScale = normalGravity * -1;
+            }
             
             if (MusicSource != null)
                 MusicSource.Play();
