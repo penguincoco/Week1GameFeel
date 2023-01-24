@@ -5,12 +5,13 @@ using UnityEngine;
 public class CloudSpawner : MonoBehaviour
 {
     public GameObject cloudPrefab;
+    public GameObject bubblePrefab;
     public float yIncrement;
 
     public GameObject currCloudParent;
     public GameObject prevCloudParent;
 
-    void Start() 
+    void Start()
     {
         StartCoroutine(SpawnClouds(cloudPrefab, true));
     }
@@ -19,12 +20,12 @@ public class CloudSpawner : MonoBehaviour
     {
         for (int i = 0; i < 12; i++) 
         {
-            float spawnX = Random.Range(-8f, 8f);
+            float spawnX = Random.Range(-9f, 9f);
             float spawnY; 
             if (isMovingUp)
-                spawnY = Random.Range(this.gameObject.transform.position.y + 5f, this.gameObject.transform.position.y + yIncrement);
+                spawnY = Random.Range(this.gameObject.transform.position.y + 8f, this.gameObject.transform.position.y + yIncrement);
             else 
-                spawnY = Random.Range(this.gameObject.transform.position.y - 5f, this.gameObject.transform.position.y - yIncrement);
+                spawnY = Random.Range(this.gameObject.transform.position.y - 8f, this.gameObject.transform.position.y - yIncrement);
 
             Vector2 cloudPos = new Vector2(spawnX, spawnY);
             

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private CloudSpawner spawner;
     public GameObject cloud;
     public GameObject bubbles;
+    public Camera mainCam;
     public static GameManager Instance { get { return _instance; } }  
 
     public bool isMovingUp = true;   
@@ -34,17 +35,25 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return)) 
         {
+            //mainCam.GetComponent<CameraMove>().Stop();
+            //wait();
+            mainCam.GetComponent<CameraMove>().Pause();
+            mainCam.GetComponent<CameraShake>().ShakeWrapper();
             if (isMovingUp)
             {
                 StopAllCoroutines();
                 isMovingUp = false;
                 StartCoroutine(spawner.SpawnClouds(bubbles, isMovingUp));
+                // mainCam.GetComponent<CameraMove>().Cont();
+                //mainCam.GetComponent<CameraMove>().Start();
             }
             else
             {
                 StopAllCoroutines();
                 isMovingUp = true;
                 StartCoroutine(spawner.SpawnClouds(cloud, isMovingUp));
+                // mainCam.GetComponent<CameraMove>().Cont();
+                //mainCam.GetComponent<CameraMove>().Start();
             }
         }
     }
