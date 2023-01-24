@@ -17,6 +17,8 @@ public class BirdMove : MonoBehaviour
     private float bufferTimer = 0.2f;
     [SerializeField]private float timeElapsed = 0f;
 
+    public GameObject[] wings;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,9 +33,14 @@ public class BirdMove : MonoBehaviour
             if (particles != null)
                 particles.Play();
 
-            if (birdWing != null)
+            // if (birdWing != null)
+            // {
+            //     birdWing.isFlapping = true;
+            // }
+            foreach (GameObject wing in wings) 
             {
-                birdWing.isFlapping = true;
+                if (wing.GetComponent<Animator>().enabled == false)
+                    wing.GetComponent<Animator>().enabled = true;
             }
 
             rb.AddForce(Vector3.up * force, ForceMode2D.Impulse);
@@ -41,27 +48,31 @@ public class BirdMove : MonoBehaviour
             if (MusicSource != null)
                 MusicSource.Play();
 
-            //timeElapsed += Time.deltaTime;
+            timeElapsed = 0f;
         }
 
-        if (rb.velocity.y <= 0)
+        timeElapsed += Time.deltaTime;
+
+        // if (rb.velocity.y <= 0)
+        // {
+        //     if (particles != null)
+        //         particles.Stop();
+
+        //     if (birdWing != null)
+        //         birdWing.isFlapping = false;
+        // }
+
+        if (timeElapsed >= bufferTimer)
         {
-            if (particles != null)
-                particles.Stop();
-
-            if (birdWing != null)
-                birdWing.isFlapping = false;
-        }
-
-        //if (timeElapsed >= bufferTimer)
-        //{
-        //    if (particles != null)
-        //        particles.Stop();
+           if (particles != null)
+               particles.Stop();
 
         //    if (birdWing != null)
         //        birdWing.isFlapping = false;
-
-        //    timeElapsed = 0f;
-        //}
+            foreach (GameObject wing in wings) 
+            {
+                wing.GetComponent<Animator>().enabled = false;
+            }
+        }
     }
 }
