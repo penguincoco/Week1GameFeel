@@ -37,11 +37,12 @@ public class GameManager : MonoBehaviour
         {
             //mainCam.GetComponent<CameraMove>().Stop();
             //wait();
-            mainCam.GetComponent<CameraMove>().Pause();
-            mainCam.GetComponent<CameraShake>().ShakeWrapper();
+            //mainCam.GetComponent<CameraMove>().Pause();
+            //mainCam.GetComponent<CameraShake>().ShakeWrapper();
             if (isMovingUp)
             {
                 StopAllCoroutines();
+                mainCam.GetComponent<CameraMove>().changeColorOne();
                 isMovingUp = false;
                 StartCoroutine(spawner.SpawnClouds(bubbles, isMovingUp));
                 // mainCam.GetComponent<CameraMove>().Cont();
@@ -50,6 +51,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 StopAllCoroutines();
+                mainCam.GetComponent<CameraMove>().changeColorTwo();
                 isMovingUp = true;
                 StartCoroutine(spawner.SpawnClouds(cloud, isMovingUp));
                 // mainCam.GetComponent<CameraMove>().Cont();

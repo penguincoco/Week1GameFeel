@@ -6,13 +6,14 @@ public class CameraMove : MonoBehaviour
 {
     public GameObject circlePrefab;
     private bool isMoving = true;
+    public Camera mainCam;
 
     void Update() 
     {
-        if (isMoving && GameManager.Instance.GetGameState()) 
-            this.transform.position += Vector3.up/200f;
+        if (isMoving && GameManager.Instance.GetGameState())
+            this.transform.position += Vector3.up / 200f;
         else if (isMoving && GameManager.Instance.GetGameState() == false)
-            this.transform.position += Vector3.down/200f;
+            this.transform.position += Vector3.down / 200f;
     }
 
     public void Stop() 
@@ -22,6 +23,7 @@ public class CameraMove : MonoBehaviour
 
     public void Start()
     {
+        mainCam = GetComponent<Camera>();
         isMoving = true;
     }
 
@@ -42,5 +44,15 @@ public class CameraMove : MonoBehaviour
     public void Cont()
     {
         Time.timeScale = 1;
+    }
+
+    public void changeColorOne()
+    {
+        mainCam.backgroundColor = Color.green;
+    }
+
+    public void changeColorTwo()
+    {
+        mainCam.backgroundColor = Color.yellow;
     }
 }

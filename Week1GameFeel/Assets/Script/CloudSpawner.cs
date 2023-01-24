@@ -20,12 +20,12 @@ public class CloudSpawner : MonoBehaviour
     {
         for (int i = 0; i < 12; i++) 
         {
-            float spawnX = Random.Range(-9f, 9f);
+            float spawnX = Random.Range(-6f, 6f);
             float spawnY; 
             if (isMovingUp)
-                spawnY = Random.Range(this.gameObject.transform.position.y + 8f, this.gameObject.transform.position.y + yIncrement);
+                spawnY = Random.Range(this.gameObject.transform.position.y + 6f, this.gameObject.transform.position.y + yIncrement);
             else 
-                spawnY = Random.Range(this.gameObject.transform.position.y - 8f, this.gameObject.transform.position.y - yIncrement);
+                spawnY = Random.Range(this.gameObject.transform.position.y - 6f, this.gameObject.transform.position.y - yIncrement);
 
             Vector2 cloudPos = new Vector2(spawnX, spawnY);
             
@@ -33,7 +33,7 @@ public class CloudSpawner : MonoBehaviour
             newCloud.transform.parent = currCloudParent.transform;
         }
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(15f);
 
         prevCloudParent = currCloudParent;
         currCloudParent = new GameObject();
