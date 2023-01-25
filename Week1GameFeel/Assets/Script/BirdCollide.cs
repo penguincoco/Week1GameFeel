@@ -16,19 +16,14 @@ public class BirdCollide : MonoBehaviour
         animatorController = this.gameObject.GetComponent<Animator>();
     }
 
-    public void OnCollisionEnter2D(Collision2D otherObj) 
+    public void OnTriggerEnter2D(Collider2D otherObj) 
     {
         if (otherObj.gameObject == boundaryObj) 
         {
-            mainCam.GetComponent<CameraMove>().Stop();
-            mainCam.GetComponent<CameraShake>().ShakeWrapper();
+            //animatorController.enabled = true;
 
-            foreach (GameObject component in birdComponents)
-            {
-                Destroy(component.gameObject.GetComponent<Rigidbody2D>());
-            }
-
-            animatorController.enabled = true;
+            //mainCam.GetComponent<CameraMove>().Stop();
+            // mainCam.GetComponent<CameraShake>().ShakeWrapper();
         }
     }
 }

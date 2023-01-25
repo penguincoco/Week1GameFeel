@@ -14,7 +14,7 @@ public class SoundController : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && audioSrc.isPlaying == false)
+        if (Input.GetKeyDown(KeyCode.Space) && audioSrc.isPlaying == false && GameManager.Instance.canMove == true)
         {
             audioSrc.PlayOneShot(clip);
         }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +12,15 @@ public class GameManager : MonoBehaviour
     public GameObject bubbles;
     public Camera mainCam;
     public static GameManager Instance { get { return _instance; } }  
+
+    public GameObject[] birdComponents;
+    private float gravityVal;
+    public CameraMove cameraScript;
+
+    public TextMeshProUGUI counterTxt;
+    public GameObject blackImg;
+
+    public bool canMove = false;
 
     public bool isMovingUp = true;   
 
@@ -29,10 +40,52 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         spawner = this.gameObject.GetComponent<CloudSpawner>();
+        gravityVal = birdComponents[0].gameObject.GetComponent<Rigidbody2D>().gravityScale;
+        StartCoroutine(StartGame());
+    }
+
+    public IEnumerator StartGame() 
+    {
+        canMove = false;
+
+        foreach(GameObject component in birdComponents) 
+        {
+            component.GetComponent<Rigidbody2D>().gravityScale = 0f;
+            component.GetComponent<BirdMove>().enabled = false;
+        }
+
+        cameraScript.enabled = false;
+
+        float countdownTimer = 3f;
+
+        for (int i = 3; i > 0; i--)
+        {
+            counterTxt.text = i.ToString();
+            yield return new WaitForSeconds(1f);
+        }
+
+        counterTxt.text = "Go!";
+
+        yield return new WaitForSeconds(1f);
+        
+        canMove = true;
+        blackImg.SetActive(false);
+        counterTxt.text = "";
+
+        foreach(GameObject component in birdComponents) 
+        {
+            component.GetComponent<Rigidbody2D>().gravityScale = gravityVal;
+            component.GetComponent<BirdMove>().enabled = true;
+        }
+
+        cameraScript.enabled = true;
     }
 
     public void Update() 
     {
+        if (Input.GetKeyDown(KeyCode.R)) 
+            SceneManager.LoadScene(SceneManager.GetActiveScene().ToString());
+
         if (Input.GetKeyDown(KeyCode.Return)) 
         {
             //mainCam.GetComponent<CameraMove>().Stop();

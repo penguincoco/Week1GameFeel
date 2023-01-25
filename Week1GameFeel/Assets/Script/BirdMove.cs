@@ -11,6 +11,7 @@ public class BirdMove : MonoBehaviour
     private AudioClip[] audioClips;
 
     public ParticleSystem particles;
+    public ParticleSystem dustParticles;
 
     public BirdWing birdWing;
 
@@ -20,6 +21,9 @@ public class BirdMove : MonoBehaviour
     public GameObject[] wings;
 
     public float normalGravity;
+
+    public GameObject openEyes;
+    public GameObject closedEyes;
 
     // Start is called before the first frame update
     void Start()
@@ -33,8 +37,17 @@ public class BirdMove : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (particles != null)
+            if (closedEyes != null && closedEyes.active == false) 
+            {
+                closedEyes.SetActive(true);
+                openEyes.SetActive(false);
+            }
+            
+            if (particles != null) 
                 particles.Play();
+
+            if (dustParticles != null) 
+                dustParticles.Play();
 
             // if (birdWing != null)
             // {
@@ -77,8 +90,17 @@ public class BirdMove : MonoBehaviour
 
         if (timeElapsed >= bufferTimer)
         {
-           if (particles != null)
+            if (particles != null)
                particles.Stop();
+
+            if (dustParticles != null)
+                dustParticles.Stop();
+
+            if (closedEyes != null) 
+            {
+                closedEyes.SetActive(false);
+                openEyes.SetActive(true);
+            }
 
         //    if (birdWing != null)
         //        birdWing.isFlapping = false;
